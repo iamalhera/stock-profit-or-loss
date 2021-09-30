@@ -1,44 +1,55 @@
-var input1 = document.querySelector("#input1");
-var input2 = document.querySelector("#input2");
-var input3 = document.querySelector("#input3");
+var initialPrice = document.querySelector("#initial-price");
+var stocks = document.querySelector("#stock");
+var currentPrice = document.querySelector("#current-price");
 var checkButton = document.querySelector("#check-button");
 var output = document.querySelector("#output");
 
-var costPrice = Number(input1.value);
-var stocks = Number(input2.value);
-var sellingPrice = Number(input3.value);
-// var costPrice = 20;
-// var sellingPrice = 50 ;
+// output.style.display = "none" ;
+function calculateProfitAndLoss(costPrice,quantity,sellingPrice){
+        if(sellingPrice<costPrice){
+            var loss = (costPrice-sellingPrice)*quantity ;
+            var lossPercentage = ((costPrice-sellingPrice)/costPrice)*100 ;
+            output.style.display = "block";
+            output.style.color = "#f50a16";
+            output.innerText = "Your loss is : "+loss+" and loss percentage is : "+lossPercentage.toFixed(2)+"%";
+        }else if(sellingPrice>costPrice){
+            var profit = (sellingPrice-costPrice)*quantity ;
+            var profitPercentage = ((sellingPrice-costPrice)/costPrice)*100 ;
+            output.style.display = "block";
+            output.style.color = "#26c40e";
+            output.innerText = "Your profit is : "+profit+" and profit percentage is : "+profitPercentage.toFixed(2)+"%";
+        }else{
+            output.style.color ="black";
+            output.innerText="No Pain-No Gain";
+        }
+        errorHandler();
+}
+function checkButtonHandler(){
+        var cp = Number(initialPrice.value);
+        var qty = Number(stocks.value);
+        var sp = Number(currentPrice.value);
 
-function profit(sellingPrice,costPrice){
-    return (sellingPrice-costPrice)
+        calculateProfitAndLoss(cp,qty,sp);
 }
-function profitPercentage(sellingPrice,costPrice){
-    return (((sellingPrice-costPrice)/costPrice)*100)
-}
-function loss(sellingPrice,costPrice){
-    return (costPrice-sellingPrice)
-}
-function lossPercentage(sellingPrice,costPrice){  
-    return (((costPrice-sellingPrice)/costPrice)*100)
-}
- 
-function calculateProfitAndLoss(){
-    if(sellingPrice>costPrice){
-    var profit = profit(sellingPrice,costPrice) ;
-    var profitPercentage = profitPercentage(sellingPrice,costPrice) ;
-    output.innerText = "profit : " + profit + "profitPercentage :" + profitPercentage ;
+
+
+function errorHandler() {
+    let p = initialPrice.value;
+    let q = stocks.value;
+    let c = currentPrice.value; 
+    output.style.display = "block";
+    if(p === ''){
+        output.style.color = "#f50a16";
+        output.innerText = "Please Fill Out All Fields" ;
     }
-    else if(costPrice>sellingPrice){
-    var loss = loss(sellingPrice,costPrice) ;
-    var lossPercentage = lossPercentage(sellingPrice,costPrice) ;
-        output.innerText = "loss : " + loss + "lossPercentage : " + lossPercentage ;
-    }
-    else{
-        output.innerText = "No Pain and No Gain";
-    }
+    if(q === '') {
+        output.style.color = "#f50a16";
+        output.innerText = "Please Fill Out All Fields" ;    }
+    if(c === '') {
+        output.style.color = "#f50a16";
+        output.innerText = "Please Fill Out All Fields" ;    }
+    if(p < 0 || q < 0 || c < 0) {
+        output.style.color = "#f50a16";
+        output.innerText = "Please Enter a Valid Number" ;    }
 }
-
-
-
-checkButton.addEventListener("click",calculateProfitAndLoss);
+checkButton.addEventListener("click",checkButtonHandler);
