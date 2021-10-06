@@ -6,6 +6,7 @@ var output = document.querySelector("#output");
 
 // output.style.display = "none" ;
 function calculateProfitAndLoss(costPrice,quantity,sellingPrice){
+
         if(sellingPrice<costPrice){
             var loss = (costPrice-sellingPrice)*quantity ;
             var lossPercentage = ((costPrice-sellingPrice)/costPrice)*100 ;
@@ -45,6 +46,9 @@ function errorHandler() {
     if(q === '') {
         output.style.color = "#f50a16";
         output.innerText = "Please Fill Out All Fields" ;    }
+    if(q === '0') {
+            output.style.color = "#f50a16";
+            output.innerText = "Please Enter quantity of stocks" ;    }
     if(c === '') {
         output.style.color = "#f50a16";
         output.innerText = "Please Fill Out All Fields" ;    }
